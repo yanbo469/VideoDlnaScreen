@@ -17,7 +17,7 @@ allprojects {
 	repositories {
 		...
 		maven { url 'https://www.jitpack.io' }
-      maven {url 'http://4thline.org/m2'}
+      		maven {url 'http://4thline.org/m2'}
 	}
  
 }
@@ -27,13 +27,14 @@ Step 2. Add the dependency
 
 ```java
 android  {
-
+	//必须添加，不加会报错
  packagingOptions {
         exclude 'META-INF/beans.xml'
     }
 
   }
 dependencies {
+
        compileOnly 'javax.enterprise:cdi-api:2.0'
        implementation 'com.github.yanbo469:VideoDlnaScreen:v1.0'
 }
