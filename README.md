@@ -79,7 +79,7 @@ Step 4.使用方法
      clingDevices = DeviceManager.getInstance().getClingDeviceList();
      //选择你要投屏的设备；
      DeviceManager.getInstance().setCurrClingDevice(ClingDevice);
-     //设置投屏的信息
+     //设置网络投屏的信息
       RemoteItem itemurl1 = new RemoteItem("一路之下", "425703", "张杰",
                         107362668, "00:04:33", "1280x720", url1);
                 ClingManager.getInstance().setRemoteItem(itemurl1);
@@ -102,7 +102,7 @@ Step 4.使用方法
             Toast.makeText(getBaseContext(), "正在连接设备，稍后操作", Toast.LENGTH_SHORT).show();
         }
     }
-    
+    //本地投屏
      private void newPlayCastLocalContent() {
         ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
         ControlManager.getInstance().newPlayCast(localItem, new ControlCallback() {
@@ -125,7 +125,7 @@ Step 4.使用方法
             }
         });
     }
-    
+    //网络投屏
      private void newPlayCastRemoteContent() {
         ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
         ControlManager.getInstance().newPlayCast(remoteItem, new ControlCallback() {
@@ -148,6 +148,7 @@ Step 4.使用方法
             }
         });
     }
+    //播放
 private void playCast() {
         ControlManager.getInstance().playCast(new ControlCallback() {
             @Override
@@ -167,7 +168,7 @@ private void playCast() {
             }
         });
     }
-
+	//暂停
     private void pauseCast() {
         ControlManager.getInstance().pauseCast(new ControlCallback() {
             @Override
