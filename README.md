@@ -57,10 +57,12 @@ public class Application {
 Step 4.使用方法
 
 ```java
+  	//得到当前搜索到的所有设备
+     private List<ClingDevice> clingDevices;
 //基于EventBus，回调会回来的值来显示当前找到的设备
  @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventBus(DeviceEvent event) {
-        refresh();
+       clingDevices = DeviceManager.getInstance().getClingDeviceList();
     }
 
     @Override
@@ -74,9 +76,8 @@ Step 4.使用方法
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-    	//得到当前搜索到的所有设备
-     private List<ClingDevice> clingDevices;
-     clingDevices = DeviceManager.getInstance().getClingDeviceList();
+  
+     
      //选择你要投屏的设备；
      DeviceManager.getInstance().setCurrClingDevice(ClingDevice);
      //设置网络投屏的信息
