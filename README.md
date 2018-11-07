@@ -1,7 +1,7 @@
 # **视频投屏，支持网络投屏和本地投屏**
 **android Dlna开发 **
 
-[GitHub主页](https://github.com/yanbo469/Utils）
+[GitHub主页](https://github.com/yanbo469/VideoDlnaScreen)
 
 
 ## 集成方式
