@@ -67,6 +67,7 @@ Step 4.使用方法
   public void onEventBus(DeviceEvent event) {
      clingDevices = DeviceManager.getInstance().getClingDeviceList();
    }
+   
   @Override
   public void onStart() {
      super.onStart();
@@ -82,13 +83,18 @@ Step 4.使用方法
      
   //选择你要投屏的设备；
   DeviceManager.getInstance().setCurrClingDevice(ClingDevice);
+  
   //设置网络投屏的信息
   RemoteItem itemurl1 = new RemoteItem("一路之下", "425703", "张杰",107362668, "00:04:33", "1280x720", url1);
+  
   //添加网络投屏的信息
   ClingManager.getInstance().setRemoteItem(itemurl1);
+  
   //设置本地投屏的信息
   private List<DIDLObject> objectList;  
+  
   final DIDLObject object = objectList.get(position);
+  
 	if (object instanceof Container) {
 		//得到本地文件夹
 		Container container = (Container) object;
@@ -101,6 +107,7 @@ Step 4.使用方法
 		ClingManager.getInstance().setLocalItem(item);     
 	}
 
+
    public Item localItem;
    public RemoteItem remoteItem;
    localItem = ClingManager.getInstance().getLocalItem();
@@ -109,17 +116,23 @@ Step 4.使用方法
    * 播放开关
    */
   private void play() {
+  
       if (ControlManager.getInstance().getState() == ControlManager.CastState.STOPED) {
 		if (localItem != null) {
+		
 		  	 newPlayCastLocalContent();
 		 } else {
+		 
 			 newPlayCastRemoteContent();
 		 }
        } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PAUSED) {
+       
         	 playCast();
        } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PLAYING) {
+       
            	 pauseCast();
        } else {
+       
            	 Toast.makeText(getBaseContext(), "正在连接设备，稍后操作", Toast.LENGTH_SHORT).show();
         }
     }
@@ -130,24 +143,29 @@ Step 4.使用方法
   private void newPlayCastLocalContent() {
   
 	ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
+	
 	ControlManager.getInstance().newPlayCast(localItem, new ControlCallback() {
 	
 	@Override
 	public void onSuccess() {
 	
 	  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
+	  
 	  ControlManager.getInstance().initScreenCastCallback();
 	  
 	     runOnUiThread(new Runnable() {
 	     	  @Override
 	          public void run() {
+		  
 		      playView.setImageResource(R.mipmap.ic_launcher_round);
 		     }
 	      }
 	      
 	     @Override
 	     public void onError(int code, String msg) {
+	     
 		  ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
+		  
 		  showToast(String.format("New play cast local content failed %s", msg));
 	});
    }
@@ -159,13 +177,16 @@ Step 4.使用方法
   private void newPlayCastRemoteContent() {
   
 	 ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
+	 
 	 ControlManager.getInstance().newPlayCast(remoteItem, new ControlCallback() {
 
 		@Override
 		public void onSuccess() {
 		
 			  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
+			  
 			  ControlManager.getInstance().initScreenCastCallback();
+			  
 			runOnUiThread(new Runnable() {
 			
 			    @Override
@@ -180,6 +201,7 @@ Step 4.使用方法
 		public void onError(int code, String msg) {
 		
 			ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
+			
 			showToast(String.format("New play cast remote content failed %s", msg));
 		    }
 		});
@@ -225,6 +247,7 @@ Step 4.使用方法
             public void onSuccess() {
 	    
                 ControlManager.getInstance().setState(ControlManager.CastState.PAUSED);
+		
                 runOnUiThread(new Runnable() {
 		
                     @Override
@@ -254,6 +277,7 @@ private void stopCast() {
             public void onSuccess() {
 	    
                 ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
+		
                 runOnUiThread(new Runnable() {
 		
                     @Override
@@ -279,6 +303,7 @@ private void stopCast() {
   private void seekCast(int progress) {
   
          String target = VMDate.toTimeString(progress);
+	 
          ControlManager.getInstance().seekCast(target, new ControlCallback() {
 	 
             @Override
