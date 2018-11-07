@@ -57,107 +57,108 @@ public class Application {
 Step 4.使用方法
 
 ```java
-//得到当前搜索到的所有设备
-private List<ClingDevice> clingDevices;
+ //得到当前搜索到的所有设备
+ private List<ClingDevice> clingDevices;
 
-/**
+ /**
   * 基于EventBus，回调会回来的值来显示当前找到的设备
   */
-@Subscribe(threadMode = ThreadMode.MAIN)
- public void onEventBus(DeviceEvent event) {
-   clingDevices = DeviceManager.getInstance().getClingDeviceList();
- }
- @Override
- public void onStart() {
-   super.onStart();
-   EventBus.getDefault().register(this);
-  }
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void onEventBus(DeviceEvent event) {
+     clingDevices = DeviceManager.getInstance().getClingDeviceList();
+   }
+  @Override
+  public void onStart() {
+     super.onStart();
+     EventBus.getDefault().register(this);
+   }
 
- @Override
- public void onStop() {
-   super.onStop();
-   EventBus.getDefault().unregister(this);
+  @Override
+  public void onStop() {
+     super.onStop();
+     EventBus.getDefault().unregister(this);
   }
   
      
-//选择你要投屏的设备；
-DeviceManager.getInstance().setCurrClingDevice(ClingDevice);
-//设置网络投屏的信息
-RemoteItem itemurl1 = new RemoteItem("一路之下", "425703", "张杰",107362668, "00:04:33", "1280x720", url1);
-//添加网络投屏的信息
-ClingManager.getInstance().setRemoteItem(itemurl1);
-//设置本地投屏的信息
-private List<DIDLObject> objectList;  
-final DIDLObject object = objectList.get(position);
-if (object instanceof Container) {
-//得到本地文件夹
-Container container = (Container) object;
-//点进文件夹刷新数据List<DIDLObject> objectList
-ClingManager.getInstance().searchLocalContent(containerId);
-} else if (object instanceof Item) {
-//得到本地文件
-Item item = (Item) object;
+  //选择你要投屏的设备；
+  DeviceManager.getInstance().setCurrClingDevice(ClingDevice);
+  //设置网络投屏的信息
+  RemoteItem itemurl1 = new RemoteItem("一路之下", "425703", "张杰",107362668, "00:04:33", "1280x720", url1);
+  //添加网络投屏的信息
+  ClingManager.getInstance().setRemoteItem(itemurl1);
+  //设置本地投屏的信息
+  private List<DIDLObject> objectList;  
+  final DIDLObject object = objectList.get(position);
+	if (object instanceof Container) {
+		//得到本地文件夹
+		Container container = (Container) object;
+		//点进文件夹刷新数据List<DIDLObject> objectList
+		ClingManager.getInstance().searchLocalContent(containerId);
+		} else if (object instanceof Item) {
+		//得到本地文件
+		Item item = (Item) object;
 
-// 设置本地投屏的信息
-ClingManager.getInstance().setLocalItem(item);        }
+		// 设置本地投屏的信息
+		ClingManager.getInstance().setLocalItem(item);     
+	}
 
-public Item localItem;
-public RemoteItem remoteItem;
-localItem = ClingManager.getInstance().getLocalItem();
-remoteItem = ClingManager.getInstance().getRemoteItem();	
-/**
-  * 播放开关
-  */
-private void play() {
-  if (ControlManager.getInstance().getState() == ControlManager.CastState.STOPED) {
+   public Item localItem;
+   public RemoteItem remoteItem;
+   localItem = ClingManager.getInstance().getLocalItem();
+   remoteItem = ClingManager.getInstance().getRemoteItem();	
+    /**
+     * 播放开关
+     */
+    private void play() {
+      if (ControlManager.getInstance().getState() == ControlManager.CastState.STOPED) {
      	if (localItem != null) {
        	   newPlayCastLocalContent();
       	 } else {
            	 newPlayCastRemoteContent();
        	 }
-     } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PAUSED) {
-       playCast();
-     } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PLAYING) {
+       } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PAUSED) {
+         playCast();
+       } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PLAYING) {
             pauseCast();
-     } else {
+       } else {
             Toast.makeText(getBaseContext(), "正在连接设备，稍后操作", Toast.LENGTH_SHORT).show();
         }
     }
 
-/**
-  * 本地投屏
-  */
-private void newPlayCastLocalContent() {
+  /**
+   * 本地投屏
+   */
+  private void newPlayCastLocalContent() {
 	ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
 	ControlManager.getInstance().newPlayCast(localItem, new ControlCallback() {
 	@Override
 	public void onSuccess() {
-	ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-	ControlManager.getInstance().initScreenCastCallback();
-	runOnUiThread(new Runnable() {
-	 @Override
-	public void run() {
-		playView.setImageResource(R.mipmap.ic_launcher_round);
-		}
+	  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
+	  ControlManager.getInstance().initScreenCastCallback();
+	     runOnUiThread(new Runnable() {
+	     	  @Override
+	          public void run() {
+		      playView.setImageResource(R.mipmap.ic_launcher_round);
+		     }
 	}
-	@Override
-	public void onError(int code, String msg) {
-		ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-		showToast(String.format("New play cast local content failed %s", msg));
+	     @Override
+	     public void onError(int code, String msg) {
+		  ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
+		  showToast(String.format("New play cast local content failed %s", msg));
 		});
-}
+	}
 
 
-/**
-  * 网络投屏
-  */
-private void newPlayCastRemoteContent() {
-	ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
-	ControlManager.getInstance().newPlayCast(remoteItem, new ControlCallback() {
+  /**
+   * 网络投屏
+   */
+  private void newPlayCastRemoteContent() {
+	 ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
+	 ControlManager.getInstance().newPlayCast(remoteItem, new ControlCallback() {
 	@Override
 	public void onSuccess() {
-		ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-		ControlManager.getInstance().initScreenCastCallback();
+		  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
+		  ControlManager.getInstance().initScreenCastCallback();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -172,12 +173,12 @@ private void newPlayCastRemoteContent() {
                 showToast(String.format("New play cast remote content failed %s", msg));
             }
         });
-}
+  }
     
-/**
-  * 播放
-  */
-private void playCast() {
+  /**
+   * 播放
+   */
+  private void playCast() {
         ControlManager.getInstance().playCast(new ControlCallback() {
             @Override
             public void onSuccess() {
@@ -198,10 +199,10 @@ private void playCast() {
     }
     
 
-/**
-  * 暂停
-  */
-private void pauseCast() {
+  /**
+   * 暂停
+   */
+  private void pauseCast() {
         ControlManager.getInstance().pauseCast(new ControlCallback() {
             @Override
             public void onSuccess() {
@@ -245,12 +246,12 @@ private void stopCast() {
         });
     }
     
-/**
-  * 改变投屏进度
-  */
-private void seekCast(int progress) {
-        String target = VMDate.toTimeString(progress);
-        ControlManager.getInstance().seekCast(target, new ControlCallback() {
+  /**
+   * 改变投屏进度
+   */
+  private void seekCast(int progress) {
+         String target = VMDate.toTimeString(progress);
+         ControlManager.getInstance().seekCast(target, new ControlCallback() {
             @Override
             public void onSuccess() {
 
@@ -263,12 +264,12 @@ private void seekCast(int progress) {
         });
     }
    
-/**
-  * 设置音量大小
-  */
-private void setVolume(int volume) {
-        currVolume = volume;
-        ControlManager.getInstance().setVolumeCast(volume, new ControlCallback() {
+  /**
+   * 设置音量大小
+   */
+  private void setVolume(int volume) {
+         currVolume = volume;
+         ControlManager.getInstance().setVolumeCast(volume, new ControlCallback() {
             @Override
             public void onSuccess() {
 
