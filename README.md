@@ -52,6 +52,7 @@ public class Application {
       VApplication.init(this);
     }
 }
+```
 
 Step 4.使用方法
 
