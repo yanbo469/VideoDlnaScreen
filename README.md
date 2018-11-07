@@ -94,10 +94,9 @@ Step 4.使用方法
 		Container container = (Container) object;
 		//点进文件夹刷新数据List<DIDLObject> objectList
 		ClingManager.getInstance().searchLocalContent(containerId);
-		} else if (object instanceof Item) {
+	} else if (object instanceof Item) {
 		//得到本地文件
 		Item item = (Item) object;
-
 		// 设置本地投屏的信息
 		ClingManager.getInstance().setLocalItem(item);     
 	}
@@ -106,22 +105,22 @@ Step 4.使用方法
    public RemoteItem remoteItem;
    localItem = ClingManager.getInstance().getLocalItem();
    remoteItem = ClingManager.getInstance().getRemoteItem();	
-    /**
-     * 播放开关
-     */
-    private void play() {
+  /**
+   * 播放开关
+   */
+  private void play() {
       if (ControlManager.getInstance().getState() == ControlManager.CastState.STOPED) {
-     	if (localItem != null) {
-       	   newPlayCastLocalContent();
-      	 } else {
-           	 newPlayCastRemoteContent();
-       	 }
+		if (localItem != null) {
+		  	 newPlayCastLocalContent();
+		 } else {
+			 newPlayCastRemoteContent();
+		 }
        } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PAUSED) {
-         playCast();
+        	 playCast();
        } else if (ControlManager.getInstance().getState() == ControlManager.CastState.PLAYING) {
-            pauseCast();
+           	 pauseCast();
        } else {
-            Toast.makeText(getBaseContext(), "正在连接设备，稍后操作", Toast.LENGTH_SHORT).show();
+           	 Toast.makeText(getBaseContext(), "正在连接设备，稍后操作", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -129,70 +128,86 @@ Step 4.使用方法
    * 本地投屏
    */
   private void newPlayCastLocalContent() {
+  
 	ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
 	ControlManager.getInstance().newPlayCast(localItem, new ControlCallback() {
+	
 	@Override
 	public void onSuccess() {
+	
 	  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
 	  ControlManager.getInstance().initScreenCastCallback();
+	  
 	     runOnUiThread(new Runnable() {
 	     	  @Override
 	          public void run() {
 		      playView.setImageResource(R.mipmap.ic_launcher_round);
 		     }
-	}
+	      }
+	      
 	     @Override
 	     public void onError(int code, String msg) {
 		  ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
 		  showToast(String.format("New play cast local content failed %s", msg));
-		});
-	}
+	});
+   }
 
 
   /**
    * 网络投屏
    */
   private void newPlayCastRemoteContent() {
+  
 	 ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
 	 ControlManager.getInstance().newPlayCast(remoteItem, new ControlCallback() {
-	@Override
-	public void onSuccess() {
-		  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-		  ControlManager.getInstance().initScreenCastCallback();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
-                    }
-                });
-            }
 
-            @Override
-            public void onError(int code, String msg) {
-                ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-                showToast(String.format("New play cast remote content failed %s", msg));
-            }
-        });
+		@Override
+		public void onSuccess() {
+		
+			  ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
+			  ControlManager.getInstance().initScreenCastCallback();
+			runOnUiThread(new Runnable() {
+			
+			    @Override
+			    public void run() {
+			    
+				playView.setImageResource(R.mipmap.ic_launcher_round);
+			    }
+			});
+            	}
+
+		@Override
+		public void onError(int code, String msg) {
+		
+			ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
+			showToast(String.format("New play cast remote content failed %s", msg));
+		    }
+		});
   }
     
   /**
    * 播放
    */
   private void playCast() {
+  
         ControlManager.getInstance().playCast(new ControlCallback() {
+	
             @Override
             public void onSuccess() {
+	    
                 ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
-                    }
-                });
+
+			runOnUiThread(new Runnable() {
+			    @Override
+			    public void run() {
+				playView.setImageResource(R.mipmap.ic_launcher_round);
+			    }
+			});
             }
 
             @Override
             public void onError(int code, String msg) {
+	    
                 showToast(String.format("Play cast failed %s", msg));
             }
         });
@@ -203,13 +218,18 @@ Step 4.使用方法
    * 暂停
    */
   private void pauseCast() {
+  
         ControlManager.getInstance().pauseCast(new ControlCallback() {
+	
             @Override
             public void onSuccess() {
+	    
                 ControlManager.getInstance().setState(ControlManager.CastState.PAUSED);
                 runOnUiThread(new Runnable() {
+		
                     @Override
                     public void run() {
+		    
                         playView.setImageResource(R.mipmap.ic_launcher_round);
                     }
                 });
@@ -217,6 +237,7 @@ Step 4.使用方法
 
             @Override
             public void onError(int code, String msg) {
+	    
                 showToast(String.format("Pause cast failed %s", msg));
             }
         });
@@ -226,13 +247,18 @@ Step 4.使用方法
   * 退出投屏
   */
 private void stopCast() {
+
         ControlManager.getInstance().stopCast(new ControlCallback() {
+	
             @Override
             public void onSuccess() {
+	    
                 ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
                 runOnUiThread(new Runnable() {
+		
                     @Override
                     public void run() {
+		    
                         playView.setImageResource(R.mipmap.ic_launcher_round);
                         finish();
                     }
@@ -241,6 +267,7 @@ private void stopCast() {
 
             @Override
             public void onError(int code, String msg) {
+	    
                 showToast(String.format("Stop cast failed %s", msg));
             }
         });
@@ -250,8 +277,10 @@ private void stopCast() {
    * 改变投屏进度
    */
   private void seekCast(int progress) {
+  
          String target = VMDate.toTimeString(progress);
          ControlManager.getInstance().seekCast(target, new ControlCallback() {
+	 
             @Override
             public void onSuccess() {
 
@@ -259,6 +288,7 @@ private void stopCast() {
 
             @Override
             public void onError(int code, String msg) {
+	    
                 showToast(String.format("Seek cast failed %s", msg));
             }
         });
@@ -268,8 +298,10 @@ private void stopCast() {
    * 设置音量大小
    */
   private void setVolume(int volume) {
+  
          currVolume = volume;
          ControlManager.getInstance().setVolumeCast(volume, new ControlCallback() {
+	 
             @Override
             public void onSuccess() {
 
@@ -277,6 +309,7 @@ private void stopCast() {
 
             @Override
             public void onError(int code, String msg) {
+	    
                 showToast(String.format("Set cast volume failed %s", msg));
             }
         });
