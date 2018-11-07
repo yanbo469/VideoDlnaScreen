@@ -82,9 +82,31 @@ Step 4.使用方法
      //设置网络投屏的信息
       RemoteItem itemurl1 = new RemoteItem("一路之下", "425703", "张杰",
                         107362668, "00:04:33", "1280x720", url1);
+			  //添加网络投屏的信息
                 ClingManager.getInstance().setRemoteItem(itemurl1);
-		
-		  /**
+		     //设置本地投屏的信息
+     private List<DIDLObject> objectList;
+     
+     final DIDLObject object = objectList.get(position);
+        if (object instanceof Container) {
+		//得到本地文件夹
+            Container container = (Container) object;
+	    //点进文件夹刷新数据List<DIDLObject> objectList
+            ClingManager.getInstance().searchLocalContent(containerId);
+        } else if (object instanceof Item) {
+	//得到本地文件
+            Item item = (Item) object;
+	    //设置本地投屏的信息
+            ClingManager.getInstance().setLocalItem(item);
+        }
+	
+	
+	public Item localItem;
+        public RemoteItem remoteItem;
+	localItem = ClingManager.getInstance().getLocalItem();
+        remoteItem = ClingManager.getInstance().getRemoteItem();
+	
+   /**
      * 播放开关
      */
     private void play() {
