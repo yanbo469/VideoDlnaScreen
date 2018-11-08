@@ -66,11 +66,12 @@
                 android:orientation="horizontal"
                 android:padding="24dp">
 
-                <ImageView
+                <TextView
                     android:id="@+id/img_volume"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@mipmap/ic_launcher_round" />
+                    android:text="声音"
+                    android:gravity="center"/>
 
                 <SeekBar
                     android:id="@+id/seek_bar_volume"
@@ -129,20 +130,22 @@
                     android:layout_marginBottom="8dp"
                     android:padding="8dp">
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/img_stop"
-
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:text="退出"
+                        android:gravity="center"/>
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/img_play"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_centerInParent="true"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:text="播放"
+                        android:textSize="17sp"
+                        android:gravity="center"/>
 
                     <ImageView
                         android:id="@+id/img_next"
@@ -151,7 +154,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="24dp"
                         android:layout_toRightOf="@id/img_play"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:src="@mipmap/ic_launcher_round"
+                        android:visibility="invisible"/>
 
                     <ImageView
                         android:id="@+id/img_previous"
@@ -160,7 +164,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="24dp"
                         android:layout_toLeftOf="@id/img_play"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:src="@mipmap/ic_launcher_round"
+                        android:visibility="invisible"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

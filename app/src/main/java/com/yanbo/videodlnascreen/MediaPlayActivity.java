@@ -39,16 +39,16 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
     TextView contentUrlView;
 
 
-    ImageView volumeView;
+    TextView volumeView;
 
     SeekBar volumeSeekbar;
 
     SeekBar progressSeekbar;
     TextView playTimeView;
     TextView playMaxTimeView;
-    ImageView stopView;
+    TextView stopView;
     ImageView previousView;
-    ImageView playView;
+    TextView playView;
     ImageView nextView;
 
 
@@ -197,9 +197,9 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 }
                 // 这里是根据之前的状态判断的
                 if (isMute) {
-                    volumeView.setImageResource(R.mipmap.ic_launcher_round);
+                    volumeView.setText("声音");
                 } else {
-                    volumeView.setImageResource(R.mipmap.ic_launcher_round);
+                    volumeView.setText("静音");
                 }
             }
 
@@ -263,7 +263,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
+                        playView.setText("暂停");
                     }
                 });
             }
@@ -286,7 +286,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
+                        playView.setText("暂停");
                     }
                 });
             }
@@ -307,8 +307,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
-                    }
+                        playView.setText("暂停");                    }
                 });
             }
 
@@ -327,7 +326,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
+                        playView.setText("播放");
                     }
                 });
             }
@@ -347,7 +346,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playView.setImageResource(R.mipmap.ic_launcher_round);
+                        playView.setText("播放");
                         finish();
                     }
                 });
@@ -387,17 +386,19 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                     ControlManager.getInstance().setState(ControlManager.CastState.TRANSITIONING);
                 } else if (avtInfo.getState().equals("PLAYING")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.PLAYING);
-                    playView.setImageResource(R.mipmap.ic_launcher_round);
+                    playView.setText("暂停");
                 } else if (avtInfo.getState().equals("PAUSED_PLAYBACK")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.PAUSED);
-                    playView.setImageResource(R.mipmap.ic_launcher_round);
+                    playView.setText("播放");
                 } else if (avtInfo.getState().equals("STOPPED")) {
                     ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-                    playView.setImageResource(R.mipmap.ic_launcher_round);
+                    playView.setText("播放");
+
                     finish();
                 } else {
                     ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
-                    playView.setImageResource(R.mipmap.ic_launcher_round);
+                    playView.setText("播放");
+
                     finish();
                 }
             }
@@ -415,10 +416,10 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
         if (rcInfo != null && ControlManager.getInstance()
                 .getState() != ControlManager.CastState.STOPED) {
             if (rcInfo.isMute() || rcInfo.getVolume() == 0) {
-                volumeView.setImageResource(R.mipmap.ic_launcher_round);
+                volumeView.setText("静音");
                 ControlManager.getInstance().setMute(true);
             } else {
-                volumeView.setImageResource(R.mipmap.ic_launcher_round);
+                volumeView.setText("声音");
                 ControlManager.getInstance().setMute(false);
             }
             volumeSeekbar.setProgress(rcInfo.getVolume());
