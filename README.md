@@ -58,6 +58,9 @@ public class Application {
 Step 4.使用方法
 
 ```java
+//使用前先注册服务
+ClingManager.getInstance().startClingService();
+
  //得到当前搜索到的所有设备
  private List<ClingDevice> clingDevices;
 
