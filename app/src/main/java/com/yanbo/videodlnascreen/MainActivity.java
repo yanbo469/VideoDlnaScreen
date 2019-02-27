@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Button button1;
     RecyclerView recyclerView;
-    String  url1="http://220.170.49.101:8080/6/a/o/w/z/aowzdtjxyzarajszckljusoswxkskk/hc.yinyuetai.com/44E4016521C693F23F7E9344AEBF5AF0.mp4?sc=44cf623e14029025&br=781&vid=3266995&aid=35&area=ML&vst=0";
+    String  url1="http://hc.yinyuetai.com/uploads/videos/common/44E4016521C693F23F7E9344AEBF5AF0.mp4?sc=5c4d956adf76a722&br=781&vid=3266995&aid=35&area=ML&vst=0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         button=findViewById(R.id.button);
         button1=findViewById(R.id.button1);
         recyclerView=findViewById(R.id.recycler_view);
+        ClingManager.getInstance().startClingService();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

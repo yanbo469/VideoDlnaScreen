@@ -35,14 +35,9 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MediaPlayActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView contentTitleView;
-
     TextView contentUrlView;
-
-
     TextView volumeView;
-
     SeekBar volumeSeekbar;
-
     SeekBar progressSeekbar;
     TextView playTimeView;
     TextView playMaxTimeView;
@@ -347,7 +342,7 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void run() {
                         playView.setText("播放");
-                        finish();
+//                        finish();
                     }
                 });
             }
@@ -398,8 +393,8 @@ public class MediaPlayActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     ControlManager.getInstance().setState(ControlManager.CastState.STOPED);
                     playView.setText("播放");
-
-                    finish();
+//
+//                    finish();
                 }
             }
             if (!TextUtils.isEmpty(avtInfo.getMediaDuration())) {
