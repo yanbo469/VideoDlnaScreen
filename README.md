@@ -344,3 +344,14 @@ private void stopCast() {
         });
     }
 }
+```
+## 参考感谢
+
+[Cling DLNA库](https://github.com/4thline/cling)
+
+[DLNA 百科介绍](https://baike.baidu.com/item/DLNA)
+
+[简书-细卷子](https://www.jianshu.com/p/4452182d2b48)
+
+[hubing8658/UPnP-DLNA-Demo](https://github.com/hubing8658/UPnP-DLNA-Demo)
+[kevinshine/BeyondUPnP](https://github.com/kevinshine/BeyondUPnP)
